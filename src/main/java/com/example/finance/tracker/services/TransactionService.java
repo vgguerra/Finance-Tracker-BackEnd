@@ -26,21 +26,14 @@ public class TransactionService {
     }
 
     public Transaction createTransaction(Transaction transaction) {
-        // --- LÓGICA DE NEGÓCIO IMPORTANTE ---
-        // O objeto 'transaction' que chega aqui do front-end terá um objeto 'category'
-        // que contém apenas o ID. Precisamos buscar a entidade Category completa no banco.
 
-        // 1. Pega o ID da categoria que veio na requisição
         Long categoryId = transaction.getCategory().getId();
 
-        // 2. Busca a entidade Category completa no banco de dados usando o ID
         Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new RuntimeException("Categoria com ID " + categoryId + " não encontrada!")); // Lança uma exceção se não achar
+                .orElseThrow(() -> new RuntimeException("Categoria com ID " + categoryId + " não encontrada!"));
 
-        // 3. Agora, associa a categoria REAL (gerenciada pelo JPA) à transação
         transaction.setCategory(category);
 
-        // 4. Finalmente, salva a transação completa
         return transactionRepository.save(transaction);
     }
 
