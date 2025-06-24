@@ -50,4 +50,19 @@ public class CategoryService {
             throw new IllegalArgumentException("Está categoria não existe no banco de dados.");
         }
     }
+
+    @Transactional
+    public void updateCategory(Category categoryUpdates, Long id) { // Renomeado para clareza
+        Optional<Category> existingCategoryOptional = categoryRepository.findById(id);
+
+        if (existingCategoryOptional.isPresent()) {
+            Category existingCategory = existingCategoryOptional.get();
+
+            existingCategory.setName(categoryUpdates.getName());
+
+            categoryRepository.save(existingCategory);
+        } else {
+            throw new IllegalArgumentException("Esta categoria não existe no banco de dados");
+        }
+    }
 }
