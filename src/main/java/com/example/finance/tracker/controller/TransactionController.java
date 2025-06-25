@@ -1,6 +1,6 @@
 package com.example.finance.tracker.controller;
 
-import com.example.finance.tracker.models.Transaction;
+import com.example.finance.tracker.DTOs.TransactionDTO;
 import com.example.finance.tracker.models.Transaction;
 import com.example.finance.tracker.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,16 +22,15 @@ public class TransactionController {
     }
 
     @GetMapping
-    public List<Transaction> getAllTransactions() {
+    public List<TransactionDTO> getAllTransactions() {
         return transactionService.getAllTransactions();
     }
 
     @PostMapping
-    public ResponseEntity<Transaction> createTransaction(@RequestBody Transaction transaction) {
-        Transaction novaTransacao = transactionService.createTransaction(transaction);
-        return new ResponseEntity<>(novaTransacao, HttpStatus.CREATED);
+    public ResponseEntity<TransactionDTO> createTransaction(@RequestBody TransactionDTO transactionDto) {
+        TransactionDTO savedTransaction = transactionService.createTransaction(transactionDto);
+        return new ResponseEntity<>(savedTransaction, HttpStatus.CREATED);
     }
-
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTransaction(@PathVariable Long id) {

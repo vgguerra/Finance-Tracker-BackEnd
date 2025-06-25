@@ -52,7 +52,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public void updateCategory(Category categoryUpdates, Long id) { // Renomeado para clareza
+    public void updateCategory(Category categoryUpdates, Long id) {
         Optional<Category> existingCategoryOptional = categoryRepository.findById(id);
 
         if (existingCategoryOptional.isPresent()) {

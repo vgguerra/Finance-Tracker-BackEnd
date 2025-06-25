@@ -1,8 +1,9 @@
 package com.example.finance.tracker.models;
 
+import com.example.finance.tracker.models.Enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.*;
-import java.math.BigDecimal;
+import java.math.BigDecimal; // Se não estiver usando BigDecimal, pode remover
 import java.time.LocalDate;
 
 @Entity
@@ -14,7 +15,6 @@ import java.time.LocalDate;
 public class Transaction {
 
     @Id
-    @Getter
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id",unique = true)
     private Long id;
@@ -23,15 +23,16 @@ public class Transaction {
     private String description;
 
     @Column(name = "value")
-    private BigDecimal value;
+    private Double value;
 
     @Column(name = "data")
     private LocalDate date;
 
-    @Column(name = "tipo")
-    private String type;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private TransactionType type;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 }
