@@ -28,7 +28,6 @@ public class TransactionService {
         this.categoryRepository = categoryRepository;
     }
 
-    // ***** MÉTODO ALTERADO *****
     public List<TransactionDTO> getAllTransactions() {
         return transactionRepository.findAll()
                 .stream()
@@ -51,7 +50,7 @@ public class TransactionService {
 
         Transaction savedTransaction = transactionRepository.save(newTransaction);
 
-        return convertToDTO(savedTransaction); // Converte a entidade salva para o DTO de resposta
+        return convertToDTO(savedTransaction);
     }
 
     public void deleteTransaction(Long id) {
