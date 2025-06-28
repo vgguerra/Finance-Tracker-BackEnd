@@ -86,24 +86,19 @@ public class TransactionService {
 
     private TransactionDTO convertToDTO(Transaction transaction) {
         TransactionDTO dto = new TransactionDTO();
-        dto.setId(transaction.getId()); // <--- CORRECTED: Set the transaction's ID to the DTO's ID field
+        dto.setId(transaction.getId());
         dto.setDescription(transaction.getDescription());
         dto.setValue(transaction.getValue());
         dto.setDate(transaction.getDate());
         dto.setType(transaction.getType().name());
 
-        // Ensure category is not null before accessing its properties
         if (transaction.getCategory() != null) {
             CategoryDTO categoryDto = new CategoryDTO();
             categoryDto.setId(transaction.getCategory().getId());
             categoryDto.setName(transaction.getCategory().getName());
             dto.setCategory(categoryDto);
-            // If you still need categoryId in the DTO for some reason:
-            // dto.setCategoryId(transaction.getCategory().getId());
         } else {
-            // Handle case where category might be null (e.g., if fetch type was LAZY and not loaded)
-            dto.setCategory(null); // Or create a default CategoryDTO
-            // dto.setCategoryId(null);
+            dto.setCategory(null);
         }
 
         return dto;
